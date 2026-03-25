@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>𬠽</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #000;
+            min-height: 100vh;
+            overflow: hidden;
+            /* 禁止用户选择文本，防止干扰 */
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        /* 视频容器：全屏覆盖，无控件 */
+        #boot-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            z-index: 1;
+            /* 隐藏浏览器自带控件 */
+            pointer-events: none;
+        }
+        /* 底部启动文字 */
+        .boot-text {
+            position: fixed;
+            bottom: 10vh;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #fff;
+            font-size: 18px;
+            z-index: 2;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+    <!-- 开机动画视频：静音自动播放，无控件，不可暂停 -->
+    <video id="boot-video" autoplay muted loop playsinline>
+        <source src="startup_animation.mp4" type="video/mp4">
+        你的浏览器不支持视频播放
+    </video>
+
+    <script>
+        const video = document.getElementById('boot-video');
+        
+        // 阻止所有可能的暂停操作
+        video.addEventListener('pause', (e) => {
+            e.preventDefault();
+            video.play();
+        });
+        video.addEventListener('click', (e) => {
+            e.preventDefault();
+        });
+        video.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+        });
+
+        // 3秒后跳转（和原逻辑一致）
+        setTimeout(() => {
+            location.href = "desktop.html";
+        }, 10000);
+    </script>
+</body>
+</html>
